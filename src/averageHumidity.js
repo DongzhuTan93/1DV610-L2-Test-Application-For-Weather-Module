@@ -4,7 +4,7 @@
  */
 export class AverageHumidity {
   /**
-   * Represents average Humidity.
+   * Represents average Humidity constructor.
    *
    * @param {string} humidities The humidities to counting.
    */

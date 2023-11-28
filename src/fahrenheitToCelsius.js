@@ -4,16 +4,16 @@
  */
 export class FahrenheitToCelsius {
   /**
-   * Represents temperatures in Fahrenheit to celsius.
+   * Represents fahrenheit to celsius constructor.
    *
-   * @param {number} temperatureF The temperatures in Fahrenheit to counting.
+   * @param {number} temperatureF The temperatures in fahrenheit to counting.
    */
   constructor (temperatureF) {
     this.temperatureF = temperatureF
   }
 
   /**
-   * Converts Fahrenheit to Celsius.
+   * Converts fahrenheit to celsius.
    *
    * @returns {number} The temperatures in celsius.
    */

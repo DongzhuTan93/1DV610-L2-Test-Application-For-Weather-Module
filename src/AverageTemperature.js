@@ -4,7 +4,7 @@
  */
 export class AverageTemperature {
   /**
-   * Represents average temperature.
+   * Represents average temperature constructor.
    *
    * @param {string} temperatures The temperature to counting.
    */

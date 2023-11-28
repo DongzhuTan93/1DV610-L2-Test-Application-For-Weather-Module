@@ -6,6 +6,7 @@
 
 import { AverageTemperature } from './averageTemperature.js'
 import { AverageHumidity } from './averageHumidity.js'
+import { FahrenheitToCelsius } from './fahrenheitToCelsius.js'
 
 /**
  * The main function of the application.
@@ -21,8 +22,11 @@ const main = async () => {
     const oneWeeksHumidity = [62, 62, 67, 85, 97, 78, 91]
     const humidityCalculator = new AverageHumidity(oneWeeksHumidity)
     const averageHumidityForTheWeek = humidityCalculator.countAverageHumidity()
-
     console.log('The average humidity for the week is about: ' + averageHumidityForTheWeek + '%')
+
+    const temperatureInFahrenheit = 77
+    const temperatureInCelsius = new FahrenheitToCelsius(temperatureInFahrenheit).countFahrenheitToCelsius()
+    console.log(`${temperatureInFahrenheit}°F is equal to ${temperatureInCelsius}°C`)
   } catch (error) {
     console.error(error.message)
   }

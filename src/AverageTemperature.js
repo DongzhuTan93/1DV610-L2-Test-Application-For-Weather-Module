@@ -1,10 +1,4 @@
 /**
- * Module for calculate the average temperature.
- *
- * @author Dongzhu Tan <dt222ha@student.lnu.se>
- */
-
-/**
  * Represents the average temperature.
  *
  */
@@ -25,9 +19,9 @@ export class AverageTemperature {
    */
   countAverageTemperature () {
     const temperatureSum = this.temperatures.reduce((acc, curr) => acc + curr, 0)
-    const average = temperatureSum / this.temperatures.length
+    const averageTemperature = temperatureSum / this.temperatures.length
 
     // Calculation results are kept to one decimal place.
-    return Number(average.toFixed(1))
+    return Number(averageTemperature.toFixed(1))
   }
 }

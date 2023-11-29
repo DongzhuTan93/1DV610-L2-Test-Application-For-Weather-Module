@@ -13,9 +13,9 @@ export class AverageWindSpeed {
   }
 
   /**
-   * Calculate the average wind speed for a week.
+   * Calculate the average wind speed for the next 5 days.
    *
-   * @returns {number} One weeks average wind speed.
+   * @returns {number} 5 days average wind speed.
    */
   countAverageWindSpeed () {
     const windSpeedSum = this.windSpeeds.reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce

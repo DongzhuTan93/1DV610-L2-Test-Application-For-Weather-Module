@@ -13,9 +13,9 @@ export class AverageHumidity {
   }
 
   /**
-   * Calculate the average humidity for a week.
+   * Calculate the average humidity for the next 5 days.
    *
-   * @returns {number} One weeks average humidity.
+   * @returns {number} 5 days average humidity.
    */
   countAverageHumidity () {
     const humiditySum = this.humidities.reduce((acc, curr) => acc + curr, 0)

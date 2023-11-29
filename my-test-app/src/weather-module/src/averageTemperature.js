@@ -13,9 +13,9 @@ export class AverageTemperature {
   }
 
   /**
-   * Calculate the average temperature for a week.
+   * Calculate average temperature for the next 5 days.
    *
-   * @returns {number} One weeks average temperature.
+   * @returns {number} 5 days average temperature.
    */
   countAverageTemperature () {
     const temperatureSum = this.temperatures.reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce

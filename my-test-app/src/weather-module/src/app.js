@@ -4,7 +4,7 @@
  * @author Dongzhu Tan <dt222ha@student.lnu.se>
  */
 
-import { weatherModule } from './weatherModule'
+import { WeatherModule } from './weatherModule.js'
 import { WeatherDataFetcher } from './weatherDataFetcher.js'
 
 /**
@@ -21,19 +21,25 @@ export const main = async (city, country) => {
     const coordinates = await weatherFetcher.getCoordinates(city, country)
     const weatherData = await weatherFetcher.fetchWeather(coordinates.lat, coordinates.lon)
     console.log(weatherData)
-    const weatherDataList = weatherData.list
 
-    const averageTemperature = weatherModule.countAverageTemperature(weatherDataList)
+    // Save corresponding to an array and sent it to corresponding function.
+    const weatherDataList = weatherData.list
+    const temperatures = weatherDataList.map(item => item.main.temp)
+    const humidities = weatherDataList.map(item => item.main.humidity)
+    const windSpeeds = weatherDataList.map(item => item.wind.speed)
+
+    const weatherModule = new WeatherModule(temperatures, humidities, windSpeeds)
+
+    const averageTemperature = weatherModule.countAverageTemperature()
     console.log('The average temperature for the next 5 days is about: ' + averageTemperature + '°C')
 
-    const averageHumidity = weatherModule.countAverageHumidity(weatherDataList)
+    const temperatureToCelsius = weatherModule.convertKelvinToCelsius(temperatures[0])
+    console.log(`${temperatures[0]} is equal to ${temperatureToCelsius}°C`)
+
+    const averageHumidity = weatherModule.countAverageHumidity()
     console.log('The average humidity for the next 5 days is about is about: ' + averageHumidity + '%')
 
-    const temperatureInKelvin = weatherData.list[0].main.temp
-    const temperatureInCelsius = weatherModule.convertKelvinToCelsius(temperatureInKelvin)
-    console.log(`${temperatureInKelvin} is equal to ${temperatureInCelsius}°C`)
-
-    const averageWindSpeed = weatherModule.countAverageWindSpeed(weatherDataList)
+    const averageWindSpeed = weatherModule.countAverageWindSpeed()
     console.log('The average wind speed for the next 5 days is about is about is about: ' + averageWindSpeed + ' m/s')
 
     /* return {

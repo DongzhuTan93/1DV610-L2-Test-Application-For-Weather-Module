@@ -14,7 +14,7 @@ function App() {
      
       console.log('Submitting city' + city)
       console.log('Submitting country' + country)
-      const moudleResult = main(city, country)
+      const moudleResult = await main(city, country) // Await the async call
       setResult(moudleResult)
       
     } catch (error) {

@@ -34,8 +34,11 @@ export class WeatherDataFetcher {
    * @param {string} lon The citys lon.
    * @returns {string} the citys coordinate.
    */
-  async fetchFiveDaysWeatherForecast (lat, lon) {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${this.apiKey}`)
+  async fetchWeatherData (lat, lon) {
+    const response = await fetch(`${this.baseUrl}?lat=${lat}&lon=${lon}&appid=${this.apiKey}`)
+    if (!response.ok) {
+      throw new Error(`Error fetching weather data: ${response.statusText}`)
+    }
     const data = await response.json()
     return data
   }

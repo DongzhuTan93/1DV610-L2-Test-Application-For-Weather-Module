@@ -28,8 +28,9 @@ export const main = async (city, country) => {
     const temperatures = weatherDataList.map(item => item.main.temp)
     const humidities = weatherDataList.map(item => item.main.humidity)
     const windSpeeds = weatherDataList.map(item => item.wind.speed)
+    const rainfall = weatherDataList.map(item => item.rain)
 
-    const weatherModule = new WeatherModule(temperatures, humidities, windSpeeds)
+    const weatherModule = new WeatherModule(temperatures, humidities, windSpeeds, rainfall)
 
     const averageTemperature = weatherModule.countAverageTemperature(temperatures)
     console.log('The average temperature for the next 5 days is about: ' + averageTemperature + '°C')
@@ -42,6 +43,9 @@ export const main = async (city, country) => {
 
     const averageWindSpeed = weatherModule.countAverageWindSpeed(windSpeeds)
     console.log('The average wind speed for the next 5 days is about is about is about: ' + averageWindSpeed + ' m/s')
+
+    const maxRainfall = weatherModule.countMaximumRainfall(rainfall)
+    console.log('The maximum rainfall for the next 5 days is about: ' + maxRainfall + 'mm')
 
     return {
       averageTemperature,

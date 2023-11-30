@@ -5,9 +5,9 @@ export class WeatherModule {
   /**
    * Represent a weatherModule constructor.
    *
-   * @param {string} temperatures The input temperatures data.
-   * @param {string} humidities The input humidities data.
-   * @param {string} windSpeeds The input windSpeeds data.
+   * @param {Array} temperatures The input temperatures data.
+   * @param {Array} humidities The input humidities data.
+   * @param {Array} windSpeeds The input windSpeeds data.
    */
   constructor (temperatures, humidities, windSpeeds) {
     this.temperatures = temperatures
@@ -23,7 +23,9 @@ export class WeatherModule {
    */
   countAverageTemperature (temperatures) {
     console.log('The temperature for the next 5 days are: ' + temperatures.join() + 'K') // Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join
-    const temperatureSum = temperatures.reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
+
+    // Convert each temperature from Kelvin to Celsius before summing
+    const temperatureSum = temperatures.map(tempInKelvin => this.convertKelvinToCelsius(tempInKelvin)).reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
     const averageTemperatureKelvin = temperatureSum / temperatures.length
     const averageTemperatureCelsius = this.convertKelvinToCelsius(averageTemperatureKelvin)
 
@@ -39,6 +41,7 @@ export class WeatherModule {
    */
   countAverageHumidity (humidities) {
     console.log('The humidities for the next 5 days are: ' + humidities.join() + '%')
+
     const humiditySum = humidities.reduce((acc, curr) => acc + curr, 0)
     const averageHumidity = humiditySum / humidities.length
 
@@ -54,6 +57,7 @@ export class WeatherModule {
    */
   countAverageWindSpeed (windSpeeds) {
     console.log('The wind speed for the next 5 days are: ' + windSpeeds.join() + 'm/s')
+
     const windSpeedSum = windSpeeds.reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
     const averageWindSpeed = windSpeedSum / windSpeeds.length
 
@@ -65,9 +69,22 @@ export class WeatherModule {
    * Convert temperature Kelvin to Celsius.
    *
    * @param {string} temperatureInKelvin Temperature in kelvin.
-   * @returns {string} The temperatures in celsius.
+   * @returns {number} The temperatures in celsius.
    */
   convertKelvinToCelsius (temperatureInKelvin) {
     return Number((temperatureInKelvin - 273.15).toFixed(1)) // Inspiration: https://www.metric-conversions.org/temperature/kelvin-to-celsius.htm
+  }
+
+  /**
+   * Calculate the maximum rainfall for the next 5 days.
+   *
+   * @param {Array} rainfallData  Array containing rainfall for the next 5 days.
+   * @returns {number} Maximum rainfall in mm.
+   */
+  countMaximumRainfall (rainfallData) {
+    const rainfallAmounts = rainfallData.map(item => (item && item.rain ? item.rain['3h'] : 0))
+    const maxRainfall = Math.max(...rainfallAmounts)
+    // If no rainfall data is present, return 0
+    return maxRainfall || 0
   }
 }

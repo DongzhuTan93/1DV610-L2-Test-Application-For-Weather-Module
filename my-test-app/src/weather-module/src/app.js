@@ -25,33 +25,33 @@ export const main = async (city, country) => {
 
     // Save corresponding to an array and sent it to corresponding function.
     const weatherDataList = weatherData.list
-    const temperatures = weatherDataList.map(item => item.main.temp)
+    const temperaturesInKelvin = weatherDataList.map(item => item.main.temp)
+    console.log('the temperaturesInKelvin arrays length is: ' + temperaturesInKelvin.length)
     const humidities = weatherDataList.map(item => item.main.humidity)
+    console.log('the humidities arrays length is: ' + humidities.length)
     const windSpeeds = weatherDataList.map(item => item.wind.speed)
-    const rainfall = weatherDataList.map(item => item.rain)
+    console.log('the windSpeeds arrays length is: ' + windSpeeds.length)
+    const rainfall = weatherDataList.map(item => item.rain && item.rain['3h'] ? item.rain['3h'] : 0)
+    console.log('the rainfall arrays length is: ' + rainfall.length)
 
-    const weatherModule = new WeatherModule(temperatures, humidities, windSpeeds, rainfall)
+    const weatherModule = new WeatherModule(temperaturesInKelvin, humidities, windSpeeds, rainfall)
 
-    const averageTemperature = weatherModule.countAverageTemperature(temperatures)
-    console.log('The average temperature for the next 5 days is about: ' + averageTemperature + '°C')
+    const averageTemperatureInCelsius = await weatherModule.countAverageTemperature(temperaturesInKelvin)
+    console.log('The average temperature for the next 40 days is about: ' + averageTemperatureInCelsius)
 
-    const temperatureToCelsius = weatherModule.convertKelvinToCelsius(temperatures[0])
-    console.log(`${temperatures[0]} is equal to ${temperatureToCelsius}°C`)
+    const averageHumidity = await weatherModule.countAverageHumidity(humidities)
+    console.log('The average humidity for the next 40 days is about is about: ' + averageHumidity)
 
-    const averageHumidity = weatherModule.countAverageHumidity(humidities)
-    console.log('The average humidity for the next 5 days is about is about: ' + averageHumidity + '%')
+    const averageWindSpeed = await weatherModule.countAverageWindSpeed(windSpeeds)
+    console.log('The average wind speed for the next 40 days is about is about is about: ' + averageWindSpeed)
 
-    const averageWindSpeed = weatherModule.countAverageWindSpeed(windSpeeds)
-    console.log('The average wind speed for the next 5 days is about is about is about: ' + averageWindSpeed + ' m/s')
-
-    const maxRainfall = weatherModule.countMaximumRainfall(rainfall)
-    console.log('The maximum rainfall for the next 5 days is about: ' + maxRainfall + 'mm')
+    const maxRainfall = await weatherModule.countMaximumRainfall(rainfall)
+    console.log('The maximum rainfall for the next 40 days is about: ' + maxRainfall + 'mm')
 
     return {
-      averageTemperature,
+      averageTemperatureInCelsius,
       averageHumidity,
       averageWindSpeed,
-      temperatureToCelsius,
       maxRainfall
     }
   } catch (error) {

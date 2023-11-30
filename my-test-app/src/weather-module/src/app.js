@@ -12,6 +12,7 @@ import { WeatherDataFetcher } from './weatherDataFetcher.js'
  *
  * @param {string} city The input city to fetch.
  * @param {string} country The input country to fetch.
+ * @returns {string} TReturn the average temperature, humidity, wind speed, temperature to celsius.
  */
 export const main = async (city, country) => {
   try {
@@ -19,7 +20,7 @@ export const main = async (city, country) => {
     const weatherFetcher = new WeatherDataFetcher(apiKey)
 
     const coordinates = await weatherFetcher.getCoordinates(city, country)
-    const weatherData = await weatherFetcher.fetchWeather(coordinates.lat, coordinates.lon)
+    const weatherData = await weatherFetcher.fetchWeatherData(coordinates.lat, coordinates.lon)
     console.log(weatherData)
 
     // Save corresponding to an array and sent it to corresponding function.
@@ -30,24 +31,24 @@ export const main = async (city, country) => {
 
     const weatherModule = new WeatherModule(temperatures, humidities, windSpeeds)
 
-    const averageTemperature = weatherModule.countAverageTemperature()
+    const averageTemperature = weatherModule.countAverageTemperature(temperatures)
     console.log('The average temperature for the next 5 days is about: ' + averageTemperature + '°C')
 
     const temperatureToCelsius = weatherModule.convertKelvinToCelsius(temperatures[0])
     console.log(`${temperatures[0]} is equal to ${temperatureToCelsius}°C`)
 
-    const averageHumidity = weatherModule.countAverageHumidity()
+    const averageHumidity = weatherModule.countAverageHumidity(humidities)
     console.log('The average humidity for the next 5 days is about is about: ' + averageHumidity + '%')
 
-    const averageWindSpeed = weatherModule.countAverageWindSpeed()
+    const averageWindSpeed = weatherModule.countAverageWindSpeed(windSpeeds)
     console.log('The average wind speed for the next 5 days is about is about is about: ' + averageWindSpeed + ' m/s')
 
-    /* return {
+    return {
       averageTemperature,
       averageHumidity,
       averageWindSpeed,
-      temperatureInCelsius
-    } */
+      temperatureToCelsius
+    }
   } catch (error) {
     console.error(error.message)
   }

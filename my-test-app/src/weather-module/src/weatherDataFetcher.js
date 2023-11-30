@@ -1,5 +1,5 @@
 /**
- * Fetch 5 days weather data.
+ * Fetch 5 days forecasts weather data.
  */
 export class WeatherDataFetcher {
   /**
@@ -9,17 +9,18 @@ export class WeatherDataFetcher {
    */
   constructor (apiKey) {
     this.apiKey = apiKey
+    this.baseUrl = 'https://api.openweathermap.org/' // Set the base URL for the API
   }
 
   /**
-   * Get citys coordinate.
+   * Get city's coordinate.
    *
    * @param {string} country This is the designated country.
    * @param {string} city The weather of a certain city in this country.
-   * @returns {string} The citys coordinate.
+   * @returns {object} The city's coordinate.
    */
   async getCoordinates (country, city) {
-    const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city},${country}&limit=1&appid=${this.apiKey}`)
+    const response = await fetch(`${this.baseUrl}/geo/1.0/direct?q=${city},${country}&limit=1&appid=${this.apiKey}`)
     const data = await response.json()
     if (!response.ok || data.length === 0) {
       throw new Error('City not found or invalid country code')
@@ -32,10 +33,10 @@ export class WeatherDataFetcher {
    *
    * @param {string} lat The citys lat.
    * @param {string} lon The citys lon.
-   * @returns {string} the citys coordinate.
+   * @returns {object} The weather data.
    */
   async fetchWeatherData (lat, lon) {
-    const response = await fetch(`${this.baseUrl}?lat=${lat}&lon=${lon}&appid=${this.apiKey}`)
+    const response = await fetch(`${this.baseUrl}/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${this.apiKey}`)
     if (!response.ok) {
       throw new Error(`Error fetching weather data: ${response.statusText}`)
     }

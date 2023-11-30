@@ -64,8 +64,8 @@ export class WeatherModule {
   /**
    * Convert temperature Kelvin to Celsius.
    *
-   * @param {Array} temperatureInKelvin Temperature in kelvin.
-   * @returns {number} The temperatures in celsius.
+   * @param {string} temperatureInKelvin Temperature in kelvin.
+   * @returns {string} The temperatures in celsius.
    */
   convertKelvinToCelsius (temperatureInKelvin) {
     return Number((temperatureInKelvin - 273.15).toFixed(1)) // Inspiration: https://www.metric-conversions.org/temperature/kelvin-to-celsius.htm

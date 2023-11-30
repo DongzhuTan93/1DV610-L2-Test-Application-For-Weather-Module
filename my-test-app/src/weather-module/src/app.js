@@ -51,7 +51,8 @@ export const main = async (city, country) => {
       averageTemperature,
       averageHumidity,
       averageWindSpeed,
-      temperatureToCelsius
+      temperatureToCelsius,
+      maxRainfall
     }
   } catch (error) {
     console.error(error.message)

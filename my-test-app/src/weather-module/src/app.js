@@ -26,18 +26,14 @@ export const main = async (city, country) => {
     // Save corresponding to an array and sent it to corresponding function.
     const weatherDataList = weatherData.list
     const temperaturesInKelvin = weatherDataList.map(item => item.main.temp)
-    console.log('the temperaturesInKelvin arrays length is: ' + temperaturesInKelvin.length)
     const humidities = weatherDataList.map(item => item.main.humidity)
-    console.log('the humidities arrays length is: ' + humidities.length)
     const windSpeeds = weatherDataList.map(item => item.wind.speed)
-    console.log('the windSpeeds arrays length is: ' + windSpeeds.length)
-    const rainfall = weatherDataList.map(item => item.rain && item.rain['3h'] ? item.rain['3h'] : 0)
-    console.log('the rainfall arrays length is: ' + rainfall.length)
+    const rainfall = weatherDataList.map(item => item.rain && item.rain['3h'] ? item.rain['3h'] : 0) // Check if item.rain exists and has a property '3h'
 
     const weatherModule = new WeatherModule(temperaturesInKelvin, humidities, windSpeeds, rainfall)
 
     const averageTemperatureInCelsius = await weatherModule.countAverageTemperature(temperaturesInKelvin)
-    console.log('The average temperature for the next 40 days is about: ' + averageTemperatureInCelsius)
+    console.log('The average temperature in kelvin for the next 40 days is about: ' + averageTemperatureInCelsius)
 
     const averageHumidity = await weatherModule.countAverageHumidity(humidities)
     console.log('The average humidity for the next 40 days is about is about: ' + averageHumidity)

@@ -7,35 +7,34 @@ export class WeatherModule {
    *
    * @param {Array} temperaturesInKelvin The input temperatures data.
    * @param {Array} humidities The input humidities data.
-   * @param {Array} windSpeeds The input windSpeeds data.
+   * @param {Array} windSpeeds The input wind speeds data.
+   * @param {Array} rainfall The input rainfall data.
    */
-  constructor (temperaturesInKelvin, humidities, windSpeeds) {
+  constructor (temperaturesInKelvin, humidities, windSpeeds, rainfall) {
     this.temperaturesInKelvin = temperaturesInKelvin
     this.humidities = humidities
     this.windSpeeds = windSpeeds
+    this.rainfall = rainfall
   }
 
   /**
    * Calculate average temperaturesInKelvin for the next 40 days.
    *
-   * @param {Array} temperaturesInKelvin Array containing temperaturesInKelvin for the next 40 days.
-   * @returns {string} 40 days average temperatures in celsius.
+   * @returns {number} 40 days average temperatures in celsius.
    */
-  async countAverageTemperature (temperaturesInKelvin) {
-    const temperatureStrings = temperaturesInKelvin.map(temp => `${temp}K`).join('. ')
-    console.log('The temperature in kelvin for the next 40 days are: ' + temperatureStrings) // Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join
+  countAverageTemperature () {
+    console.log('temperaturesInKelvin:', this.temperaturesInKelvin)
+    // const temperatureStrings = this.temperaturesInKelvin.map(temp => `${temp}K`).join('. ')
+    // console.log('The temperature in kelvin for the next 40 days are: ' + temperatureStrings) // Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join
 
     // Convert each temperature from Kelvin to Celsius before summing
-    const temperaturesInKelvinSum = temperaturesInKelvin.reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
-    console.log('temperaturesInKelvinSum is: ' + temperaturesInKelvinSum)
-    console.log('type of temperaturesInKelvinSum is: ' + temperaturesInKelvinSum)
-
-    const averageTemperatureKelvin = temperaturesInKelvinSum / temperaturesInKelvin.length
-    console.log('!!result averageTemperatureKelvin is :' + averageTemperatureKelvin)
-    console.log('!!type of averageTemperatureKelvin is :' + typeof averageTemperatureKelvin)
-
+    const temperaturesInKelvinSum = this.temperaturesInKelvin.reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
+    console.log('type:' + typeof temperaturesInKelvinSum)
+    const averageTemperatureKelvin = temperaturesInKelvinSum / this.temperaturesInKelvin.length
+    console.log('length: ' + this.temperaturesInKelvin.length)
     const averageTemperatureCelsius = Number(this.convertKelvinToCelsius(averageTemperatureKelvin).toFixed(1))
-    console.log('type of averageTemperatureCelsius is ' + typeof averageTemperatureCelsius)
+    console.log('type:' + typeof averageTemperatureCelsius)
+    console.log(averageTemperatureCelsius)
 
     // Calculation results are kept to one decimal place.
     return averageTemperatureCelsius + '°C'
@@ -44,15 +43,14 @@ export class WeatherModule {
   /**
    * Calculate the average humidity for the next 40 days.
    *
-   * @param {string} humidities Array containing humidity for the next 40 days.
    * @returns {number} 40 days average humidity.
    */
-  async countAverageHumidity (humidities) {
-    const humiditieStrings = humidities.map(temp => `${temp}%`).join('. ')
+  countAverageHumidity () {
+    const humiditieStrings = this.humidities.map(temp => `${temp}%`).join('. ')
     console.log('The humidities for the next 40 days are: ' + humiditieStrings)
 
-    const humiditySum = humidities.reduce((acc, curr) => acc + curr, 0)
-    const averageHumidity = humiditySum / humidities.length
+    const humiditySum = this.humidities.reduce((acc, curr) => acc + curr, 0)
+    const averageHumidity = humiditySum / this.humidities.length
 
     // Calculation results are kept to one decimal place.
     return Number(averageHumidity.toFixed(1)) + '%'
@@ -61,40 +59,42 @@ export class WeatherModule {
   /**
    * Calculate the average wind speed for the next 40 days.
    *
-   * @param {Array} windSpeeds Array containing wind speed for the next 40 days.
    * @returns {string} 40 days average wind speed.
    */
-  async countAverageWindSpeed (windSpeeds) {
-    const windStrings = windSpeeds.map(temp => `${temp}m/s`).join('. ')
+  countAverageWindSpeed () {
+    const windStrings = this.windSpeeds.map(temp => `${temp}m/s`).join('. ')
     console.log('The wind speed for the next 40 days are: ' + windStrings)
 
-    const windSpeedSum = windSpeeds.reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
-    const averageWindSpeed = windSpeedSum / windSpeeds.length
+    const windSpeedSum = this.windSpeeds.reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
+    const averageWindSpeed = windSpeedSum / this.windSpeeds.length
 
     // Calculation results are kept to one decimal place.
     return Number(averageWindSpeed.toFixed(1)) + 'm/s'
   }
 
   /**
-   * Convert temperature Kelvin to Celsius.
+   * Convert temperature in Kelvin to Celsius.
    *
-   * @param {string} averageTemperatureKelvin Temperature in kelvin.
+   * @param {number} inputTemperatureKelvin input temperature in Kelvin.
    * @returns {string} The temperatures in celsius.
    */
-  convertKelvinToCelsius (averageTemperatureKelvin) {
-    return averageTemperatureKelvin - 273.15 // Inspiration: https://www.metric-conversions.org/temperature/kelvin-to-celsius.htm
+  convertKelvinToCelsius (inputTemperatureKelvin) {
+    return inputTemperatureKelvin - 273.15 // Inspiration: https://www.metric-conversions.org/temperature/kelvin-to-celsius.htm
   }
 
   /**
    * Calculate the maximum rainfall for the next 40 days.
    *
-   * @param {Array} rainfallData  Array containing rainfall for the next 40 days.
    * @returns {string} Maximum rainfall in mm.
    */
-  async countMaximumRainfall (rainfallData) {
-    const rainfallDataStrings = rainfallData.map(temp => `${temp}mm`).join('. ')
-    console.log('The rainfall for the next 40 days are: ' + rainfallDataStrings)
-    const maxRainfall = Math.max(...rainfallData.map(item => item && item['3h'] ? item['3h'] : 0))
-    return maxRainfall || 0
+  countMaximumRainfall () {
+    console.log('Received rainfall data:', this.rainfall)
+    // Convert to numbers and calculate maximum
+    const rainfallAmounts = this.rainfall.map(rain => Number(rain))
+    const maxRainfall = Math.max(...rainfallAmounts)
+
+    // Log the calculated maximum rainfall
+    console.log('Maximum rainfall calculated:', maxRainfall)
+    return maxRainfall + 'mm' || 0
   }
 }

@@ -17,7 +17,7 @@ function App() {
       console.log('Submitting city: ' + city)
       console.log('Submitting country: ' + country)
       const moduleResult = await main(city, country) // Await the async call
-      setTemperatureData(`The average temperature for the next 40 days is about: ${moduleResult.averageTemperature}°C`)
+      setTemperatureData(`The average temperature for the next 40 days is about: ${moduleResult.averageTemperatureInCelsius}`)
       setResult(moduleResult)
     } catch (error) {
       console.error(error)

@@ -12,7 +12,7 @@ import { WeatherDataFetcher } from './weatherDataFetcher.js'
  *
  * @param {string} city The input city to fetch.
  * @param {string} country The input country to fetch.
- * @returns {string} TReturn the average temperature, humidity, wind speed, temperature to celsius.
+ * @returns {string} Return the average temperature, temperature to celsius, humidity, and wind speed.
  */
 export const main = async (city, country) => {
   try {

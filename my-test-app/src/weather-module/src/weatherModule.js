@@ -59,7 +59,7 @@ export class WeatherModule {
   /**
    * Calculate the average wind speed for the next 40 days.
    *
-   * @returns {string} 40 days average wind speed.
+   * @returns {number} 40 days average wind speed.
    */
   countAverageWindSpeed () {
     const windStrings = this.windSpeeds.map(temp => `${temp}m/s`).join('. ')
@@ -76,7 +76,7 @@ export class WeatherModule {
    * Convert temperature in Kelvin to Celsius.
    *
    * @param {number} inputTemperatureKelvin input temperature in Kelvin.
-   * @returns {string} The temperatures in celsius.
+   * @returns {number} The temperatures in celsius.
    */
   convertKelvinToCelsius (inputTemperatureKelvin) {
     return inputTemperatureKelvin - 273.15 // Inspiration: https://www.metric-conversions.org/temperature/kelvin-to-celsius.htm
@@ -85,7 +85,7 @@ export class WeatherModule {
   /**
    * Calculate the maximum rainfall for the next 40 days.
    *
-   * @returns {string} Maximum rainfall in mm.
+   * @returns {number} Maximum rainfall in mm.
    */
   countMaximumRainfall () {
     console.log('Received rainfall data:', this.rainfall)

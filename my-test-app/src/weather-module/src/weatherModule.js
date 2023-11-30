@@ -24,17 +24,16 @@ export class WeatherModule {
    */
   countAverageTemperature () {
     console.log('temperaturesInKelvin:', this.temperaturesInKelvin)
-    // const temperatureStrings = this.temperaturesInKelvin.map(temp => `${temp}K`).join('. ')
-    // console.log('The temperature in kelvin for the next 40 days are: ' + temperatureStrings) // Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join
 
     // Convert each temperature from Kelvin to Celsius before summing
     const temperaturesInKelvinSum = this.temperaturesInKelvin.reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
     console.log('type:' + typeof temperaturesInKelvinSum)
     const averageTemperatureKelvin = temperaturesInKelvinSum / this.temperaturesInKelvin.length
-    console.log('length: ' + this.temperaturesInKelvin.length)
+    const averageTemperatureKelvinInoneDecimalPlace = Number(averageTemperatureKelvin.toFixed(1))
+    console.log('length of averageTemperatureKelvin is: ' + this.temperaturesInKelvin.length)
     const averageTemperatureCelsius = Number(this.convertKelvinToCelsius(averageTemperatureKelvin).toFixed(1))
     console.log('type:' + typeof averageTemperatureCelsius)
-    console.log(averageTemperatureCelsius)
+    console.log('The average temperature in kelvin is ' + averageTemperatureKelvinInoneDecimalPlace + 'K' + ' which is around ' + averageTemperatureCelsius + '°C in Celsius')
 
     // Calculation results are kept to one decimal place.
     return averageTemperatureCelsius + '°C'

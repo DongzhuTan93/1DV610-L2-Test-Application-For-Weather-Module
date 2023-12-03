@@ -23,20 +23,20 @@ export class WeatherModule {
    * @returns {number} 40 days average temperatures in celsius.
    */
   countAverageTemperature () {
-    console.log('temperaturesInKelvin:', this.temperaturesInKelvin)
+    try {
+      console.log('temperaturesInKelvin:', this.temperaturesInKelvin)
 
-    // Convert each temperature from Kelvin to Celsius before summing
-    const temperaturesInKelvinSum = this.temperaturesInKelvin.reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
-    console.log('type:' + typeof temperaturesInKelvinSum)
-    const averageTemperatureKelvin = temperaturesInKelvinSum / this.temperaturesInKelvin.length
-    const averageTemperatureKelvinInoneDecimalPlace = Number(averageTemperatureKelvin.toFixed(1))
-    console.log('length of averageTemperatureKelvin is: ' + this.temperaturesInKelvin.length)
-    const averageTemperatureCelsius = Number(this.convertKelvinToCelsius(averageTemperatureKelvin).toFixed(1))
-    console.log('type:' + typeof averageTemperatureCelsius)
-    console.log('The average temperature in kelvin is ' + averageTemperatureKelvinInoneDecimalPlace + 'K' + ' which is around ' + averageTemperatureCelsius + '°C in Celsius')
+      const temperaturesInKelvinSum = this.temperaturesInKelvin.reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
+      console.log('type:' + typeof temperaturesInKelvinSum)
+      const averageTemperatureKelvin = temperaturesInKelvinSum / this.temperaturesInKelvin.length
 
-    // Calculation results are kept to one decimal place.
-    return averageTemperatureCelsius + '°C'
+      // Calculation results are kept to one decimal place.
+      return Number(averageTemperatureKelvin.toFixed(1))
+    } catch (error) {
+      console.error('Error calculating average temperature:', error)
+      // Handle error appropriately or rethrow to be handled by the caller
+      throw new Error('Failed to calculate average temperature')
+    }
   }
 
   /**
@@ -45,14 +45,18 @@ export class WeatherModule {
    * @returns {number} 40 days average humidity.
    */
   countAverageHumidity () {
-    const humiditieStrings = this.humidities.map(temp => `${temp}%`).join('. ')
-    console.log('The humidities for the next 40 days are: ' + humiditieStrings)
+    try {
+      console.log('The humidities for the next 40 days are: ' + this.humiditieStrings)
 
-    const humiditySum = this.humidities.reduce((acc, curr) => acc + curr, 0)
-    const averageHumidity = humiditySum / this.humidities.length
+      const humiditySum = this.humidities.reduce((acc, curr) => acc + curr, 0)
+      const averageHumidity = humiditySum / this.humidities.length
 
-    // Calculation results are kept to one decimal place.
-    return Number(averageHumidity.toFixed(1)) + '%'
+      // Calculation results are kept to one decimal place.
+      return Number(averageHumidity.toFixed(1))
+    } catch (error) {
+      console.error('Error calculating average humidity:', error)
+      throw new Error('Failed to calculate average humidity')
+    }
   }
 
   /**
@@ -61,14 +65,18 @@ export class WeatherModule {
    * @returns {number} 40 days average wind speed.
    */
   countAverageWindSpeed () {
-    const windStrings = this.windSpeeds.map(temp => `${temp}m/s`).join('. ')
-    console.log('The wind speed for the next 40 days are: ' + windStrings)
+    try {
+      console.log('The wind speed for the next 40 days are: ' + this.windStrings)
 
-    const windSpeedSum = this.windSpeeds.reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
-    const averageWindSpeed = windSpeedSum / this.windSpeeds.length
+      const windSpeedSum = this.windSpeeds.reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
+      const averageWindSpeed = windSpeedSum / this.windSpeeds.length
 
-    // Calculation results are kept to one decimal place.
-    return Number(averageWindSpeed.toFixed(1)) + 'm/s'
+      // Calculation results are kept to one decimal place.
+      return Number(averageWindSpeed.toFixed(1))
+    } catch (error) {
+      console.error('Error calculating average temperature:', error)
+      throw new Error('Failed to calculate average temperature')
+    }
   }
 
   /**
@@ -78,7 +86,12 @@ export class WeatherModule {
    * @returns {number} The temperatures in celsius.
    */
   convertKelvinToCelsius (inputTemperatureKelvin) {
-    return inputTemperatureKelvin - 273.15 // Inspiration: https://www.metric-conversions.org/temperature/kelvin-to-celsius.htm
+    try {
+      return Number(inputTemperatureKelvin - 273.15).toFixed(1) // Inspiration: https://www.metric-conversions.org/temperature/kelvin-to-celsius.htm
+    } catch (error) {
+      console.error('Error converting Kelvin to Celsius:', error)
+      throw new Error('Failed to convert temperature from Kelvin to Celsius')
+    }
   }
 
   /**
@@ -87,13 +100,18 @@ export class WeatherModule {
    * @returns {number} Maximum rainfall in mm.
    */
   countMaximumRainfall () {
-    console.log('Received rainfall data:', this.rainfall)
-    // Convert to numbers and calculate maximum
-    const rainfallAmounts = this.rainfall.map(rain => Number(rain))
-    const maxRainfall = Math.max(...rainfallAmounts)
+    try {
+      console.log('Received rainfall data:', this.rainfall)
+      // Convert to numbers and calculate maximum
+      const rainfallAmounts = this.rainfall.map(rain => Number(rain))
+      const maxRainfall = Math.max(...rainfallAmounts)
 
-    // Log the calculated maximum rainfall
-    console.log('Maximum rainfall calculated:', maxRainfall)
-    return maxRainfall + 'mm' || 0
+      // Log the calculated maximum rainfall
+      console.log('Maximum rainfall calculated:', maxRainfall)
+      return maxRainfall || 0
+    } catch (error) {
+      console.error('Error calculating maximum rainfall:', error)
+      throw new Error('Failed to calculate maximum rainfall')
+    }
   }
 }

@@ -35,19 +35,23 @@ export const main = async (city, country) => {
 
     const weatherModule = new WeatherModule(temperaturesInKelvin, humidities, windSpeeds, rainfall)
 
-    const averageTemperatureInCelsius = await weatherModule.countAverageTemperature(temperaturesInKelvin)
-    console.log('The average temperature in kelvin for the next 40 days is about: ' + averageTemperatureInCelsius)
+    const averageTemperature = await weatherModule.countAverageTemperature(temperaturesInKelvin)
+    console.log('The average temperature in kelvin for the next 40 days is about: ' + averageTemperature + 'K')
+
+    const averageTemperatureInCelsius = await weatherModule.convertKelvinToCelsius(averageTemperature)
+    console.log('The average temperature in kelvin is ' + averageTemperature + 'K' + ' which is around ' + averageTemperatureInCelsius + '°C in Celsius')
 
     const averageHumidity = await weatherModule.countAverageHumidity(humidities)
-    console.log('The average humidity for the next 40 days is about is about: ' + averageHumidity)
+    console.log('The average humidity for the next 40 days is about is about: ' + averageHumidity + '%')
 
     const averageWindSpeed = await weatherModule.countAverageWindSpeed(windSpeeds)
-    console.log('The average wind speed for the next 40 days is about is about is about: ' + averageWindSpeed)
+    console.log('The average wind speed for the next 40 days is about is about is about: ' + averageWindSpeed + 'm/s')
 
     const maxRainfall = await weatherModule.countMaximumRainfall(rainfall)
-    console.log('The maximum rainfall for the next 40 days is about: ' + maxRainfall)
+    console.log('The maximum rainfall for the next 40 days is about: ' + maxRainfall + 'mm')
 
     return {
+      averageTemperature,
       averageTemperatureInCelsius,
       averageHumidity,
       averageWindSpeed,

@@ -5,9 +5,11 @@ import { main } from "./weather-module/src/app.js"
 function App() {
   const [city, setCity] = useState('')
   const [country, setCountry] = useState('')
-  const [result, setResult] = useState('')
   const [error, setError] = useState('')
   const [temperatureData, setTemperatureData] = useState('')
+  const [humidityData, setHumidityData] = useState('')
+  const [windSpeedData, setWindSpeedData] = useState('')
+  const [rainfallData, setRainfallData] = useState('')
 
 
   const handleWeatherFetch = async () => {
@@ -17,11 +19,13 @@ function App() {
       console.log('Submitting city: ' + city)
       console.log('Submitting country: ' + country)
       const moduleResult = await main(city, country) // Await the async call
-      setTemperatureData(`The average temperature for the next 40 days is about: ${moduleResult.averageTemperatureInCelsius}`)
-      setResult(moduleResult)
+      setTemperatureData(`The average temperature for the next 40 days is around: ${moduleResult.averageTemperature}°K, which is ${moduleResult.averageTemperatureInCelsius}°C.`)
+      setHumidityData(`The average humidity for the next 40 days is around: ${moduleResult.averageHumidity}%.`)
+      setWindSpeedData(`The average windSpeed for the next 40 days is around: ${moduleResult.averageWindSpeed} m/s.`)
+      setRainfallData(`The average rainfall for the next 40 days is around: ${moduleResult.maxRainfall}mm.`)
     } catch (error) {
       console.error(error)
-      setResult("Sorry, we couldn't fetch the weather data. Please try again later.")
+      setError("Sorry, we couldn't fetch the weather data. Please try again later.")
     }
   }
 
@@ -40,10 +44,11 @@ function App() {
         placeholder="Enter country code (e.g., SE for Sweden)"
       />
       <button onClick={handleWeatherFetch}>Get Weather</button>
-      <p>The result is:</p>
-       {/* Display the result or the error message, If result is an object, convert it to a string before rendering */}
-       <p>{error || (typeof result === 'object' ? JSON.stringify(result, null, 2) : result)}</p>
+       <p>The result is:</p>
        <p>{temperatureData}</p> {/* Render the temperature data */}
+       <p>{humidityData}</p> {/* Render the humidity data */}
+       <p>{windSpeedData}</p> {/* Render the wind speed data */}
+       <p>{rainfallData}</p> {/* Render the rain fall data */}
       {error && <div className="error-message">{error}</div>}
     </div>
   )

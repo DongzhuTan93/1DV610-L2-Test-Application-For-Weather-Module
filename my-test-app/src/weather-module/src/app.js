@@ -15,10 +15,12 @@ import { WeatherDataFetcher } from './weatherDataFetcher.js'
  * @returns {string} Return the average temperature, temperature to celsius, humidity, and wind speed.
  */
 export const main = async (city, country) => {
-  try {
-    const apiKey = '677d6e7a6780b8cf980ba095587ac1d3'
-    const weatherFetcher = new WeatherDataFetcher(apiKey)
+  if (!city || !country) {
+    throw new Error('City name and country code are required.')
+  }
 
+  try {
+    const weatherFetcher = new WeatherDataFetcher(process.env.REACT_APP_API_KEY)
     const coordinates = await weatherFetcher.getCoordinates(city, country)
     const weatherData = await weatherFetcher.fetchWeatherData(coordinates.lat, coordinates.lon)
     console.log(weatherData)
@@ -42,13 +44,13 @@ export const main = async (city, country) => {
     console.log('The average temperature in kelvin is ' + averageTemperature + 'K' + ' which is around ' + averageTemperatureInCelsius + '°C in Celsius')
 
     const averageHumidity = await weatherModule.countAverageHumidity(humidities)
-    console.log('The average humidity for the next 40 days is about is about: ' + averageHumidity + '%')
+    console.log('The average humidity for the next 40 days is around: ' + averageHumidity + '%')
 
     const averageWindSpeed = await weatherModule.countAverageWindSpeed(windSpeeds)
-    console.log('The average wind speed for the next 40 days is about is about is about: ' + averageWindSpeed + 'm/s')
+    console.log('The average wind speed for the next 40 days is around: ' + averageWindSpeed + 'm/s')
 
     const maxRainfall = await weatherModule.countMaximumRainfall(rainfall)
-    console.log('The maximum rainfall for the next 40 days is about: ' + maxRainfall + 'mm')
+    console.log('The maximum rainfall for the next 40 days is around: ' + maxRainfall + 'mm')
 
     return {
       averageTemperature,
@@ -59,7 +61,6 @@ export const main = async (city, country) => {
     }
   } catch (error) {
     console.error(error.message)
+    throw error
   }
 }
-
-main()

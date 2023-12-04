@@ -13,6 +13,11 @@ function App() {
 
 
   const handleWeatherFetch = async () => {
+    if (!city || !country) {
+      setError('City and country must be provided')
+      return // Exit the function if city or country is empty
+    }
+
     try {
       setError('') // Clear any previous errors
 

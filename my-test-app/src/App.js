@@ -14,7 +14,7 @@ function App() {
 
   const handleWeatherFetch = async () => {
     if (!city || !country) {
-      setError('City and country must be provided')
+      setError('City and country must be provided！')
       return // Exit the function if city or country is empty
     }
 
@@ -24,10 +24,10 @@ function App() {
       console.log('Submitting city: ' + city)
       console.log('Submitting country: ' + country)
       const moduleResult = await main(city, country) // Await the async call
-      setTemperatureData(`The average temperature for the next 40 days is around: ${moduleResult.averageTemperature}°K, which is ${moduleResult.averageTemperatureInCelsius}°C.`)
-      setHumidityData(`The average humidity for the next 40 days is around: ${moduleResult.averageHumidity}%.`)
-      setWindSpeedData(`The average windSpeed for the next 40 days is around: ${moduleResult.averageWindSpeed} m/s.`)
-      setRainfallData(`The average rainfall for the next 40 days is around: ${moduleResult.maxRainfall}mm.`)
+      setTemperatureData(`The average temperature for the next 40 days is around : ${moduleResult.averageTemperature}°K, which is ${moduleResult.averageTemperatureInCelsius} °C.`)
+      setHumidityData(`The average humidity for the next 40 days is around : ${moduleResult.averageHumidity} %.`)
+      setWindSpeedData(`The average windSpeed for the next 40 days is around : ${moduleResult.averageWindSpeed} m/s.`)
+      setRainfallData(`The average rainfall for the next 40 days is around : ${moduleResult.maxRainfall} mm.`)
     } catch (error) {
       console.error(error)
       setError("Sorry, we couldn't fetch the weather data. Please try again later.")
@@ -46,9 +46,10 @@ function App() {
         type="text"
         value={country}
         onChange={(e) => setCountry(e.target.value)}
-        placeholder="Enter country code (e.g., SE for Sweden)"
+        placeholder="Enter country code (e.g.,'GB' for the United Kingdom)"
       />
       <button onClick={handleWeatherFetch}>Get Weather</button>
+      <p>Opps!! Please enter country code (e.g., 'GB' for the United Kingdom, 'SE' for Sweden, and 'US' for the United States)</p>
        <p>The result is:</p>
        <p>{temperatureData}</p> {/* Render the temperature data */}
        <p>{humidityData}</p> {/* Render the humidity data */}

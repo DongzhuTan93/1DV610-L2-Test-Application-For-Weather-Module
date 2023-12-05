@@ -15,11 +15,12 @@ export class WeatherDataFetcher {
   /**
    * Get city's coordinate.
    *
-   * @param {string} country This is the designated country.
    * @param {string} city The weather of a certain city in this country.
+   * @param {string} country This is the designated country.
    * @returns {object} The city's coordinate.
    */
-  async getCoordinates (country, city) {
+  async getCoordinates (city, country) {
+    console.log('get city and country at getCoordinates: ' + city + ' and ' + country)
     try {
       if (!city || !country) {
         throw new Error('City and country must be provided')
@@ -29,18 +30,32 @@ export class WeatherDataFetcher {
         throw new Error('No API key found')
       }
 
-      const response = await fetch(`${this.baseUrl}/geo/1.0/direct?q=${city},${country}&limit=1&appid=${this.apiKey}`)
+      const url = `${this.baseUrl}/geo/1.0/direct?q=${encodeURIComponent(city)},${encodeURIComponent(country)}&limit=1&appid=${this.apiKey}`
+      const response = await fetch(url)
+      console.log(url)
 
       if (!response.ok) {
-        throw new Error('Failed to fetch coordinates')
+        throw new Error(`Failed to fetch coordinates: Status code ${response.status}`)
       }
       const data = await response.json()
 
       if (data.length === 0) {
+        console.log('No data returned', data)
         throw new Error('City not found or invalid country code')
       }
 
-      return data[0]
+      const matchedLocation = data.find(location => location.name.toLowerCase() === city.toLowerCase() && location.country.toLowerCase() === country.toLowerCase())
+
+      if (!matchedLocation) {
+        throw new Error(`No matching location found for ${city}, ${country}`)
+      }
+
+      console.log('Matched Coordinates:', matchedLocation)
+      return { lat: matchedLocation.lat, lon: matchedLocation.lon }
+
+      // console.log('getCoordinates: ', data)
+      // console.log('getCoordinates: ' + data[0].lat + data[0].lon)
+      // return data[0]
     } catch (error) {
       console.error('Error fetching coordinates:', error)
       throw error
@@ -57,6 +72,7 @@ export class WeatherDataFetcher {
   async fetchWeatherData (lat, lon) {
     try {
       const response = await fetch(`${this.baseUrl}/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${this.apiKey}`)
+      console.log('response fetchWeatherData ', response)
       if (!response.ok) {
         throw new Error(`Error fetching weather data: ${response.statusText}`)
       }

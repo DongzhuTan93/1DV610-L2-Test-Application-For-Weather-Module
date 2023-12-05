@@ -15,6 +15,7 @@ import { WeatherDataFetcher } from './weatherDataFetcher.js'
  * @returns {string} Return the average temperature, temperature to celsius, humidity, and wind speed.
  */
 export const main = async (city, country) => {
+  console.log('get city and country at main: ' + city + ' and ' + country)
   if (!city || !country) {
     throw new Error('City name and country code are required.')
   }
@@ -22,35 +23,40 @@ export const main = async (city, country) => {
   try {
     const weatherFetcher = new WeatherDataFetcher(process.env.REACT_APP_API_KEY)
     const coordinates = await weatherFetcher.getCoordinates(city, country)
+    console.log('Selected coordinates:', coordinates)
     const weatherData = await weatherFetcher.fetchWeatherData(coordinates.lat, coordinates.lon)
     console.log(weatherData)
 
     // Save corresponding to an array and sent it to corresponding function.
     const weatherDataList = weatherData.list
     const temperaturesInKelvin = weatherDataList.map(item => item.main.temp)
-    console.log('The length of temperaturesInKelvin is: ' + temperaturesInKelvin.length)
+    console.log('This is the temperature forecast for the next ' + temperaturesInKelvin.length + ' days.')
+    console.log('temperature form app.js console.log:' + temperaturesInKelvin)
     const humidities = weatherDataList.map(item => item.main.humidity)
-    console.log('The length of humidities is: ' + humidities.length)
+    console.log('This is the humidities forecast for the next ' + humidities.length + ' days.')
+    console.log('humidities form app.js console.log:' + humidities)
     const windSpeeds = weatherDataList.map(item => item.wind.speed)
-    console.log('The length of windSpeeds is: ' + windSpeeds.length)
-    const rainfall = weatherDataList.map(item => item.rain && item.rain['3h'] ? item.rain['3h'] : 0) // Check if item.rain exists and has a property '3h'
-
+    console.log('This is the windSpeeds for the next ' + windSpeeds.length + ' days.')
+    console.log('windSpeeds form app.js console.log:' + windSpeeds)
+    const rainfall = weatherDataList.map(item => item.rain && item.rain['3h'] ? item.rain['3h'] : 0)
+    // Check if item.rain exists and has a property '3h'
+    console.log('rainfall form app.js console.log:' + rainfall)
     const weatherModule = new WeatherModule(temperaturesInKelvin, humidities, windSpeeds, rainfall)
 
-    const averageTemperature = await weatherModule.countAverageTemperature(temperaturesInKelvin)
-    console.log('The average temperature in kelvin for the next 40 days is about: ' + averageTemperature + 'K')
+    const averageTemperature = await weatherModule.countAverageTemperature()
+    console.log('The average temperature in kelvin for the next 40 days is around: ' + averageTemperature + 'K.')
 
     const averageTemperatureInCelsius = await weatherModule.convertKelvinToCelsius(averageTemperature)
-    console.log('The average temperature in kelvin is ' + averageTemperature + 'K' + ' which is around ' + averageTemperatureInCelsius + '°C in Celsius')
+    console.log('The average temperature in kelvin is ' + averageTemperature + 'K' + ' which is around ' + averageTemperatureInCelsius + '°C in Celsius.')
 
-    const averageHumidity = await weatherModule.countAverageHumidity(humidities)
-    console.log('The average humidity for the next 40 days is around: ' + averageHumidity + '%')
+    const averageHumidity = await weatherModule.countAverageHumidity()
+    console.log('The average humidity for the next 40 days is around: ' + averageHumidity + '%.')
 
-    const averageWindSpeed = await weatherModule.countAverageWindSpeed(windSpeeds)
-    console.log('The average wind speed for the next 40 days is around: ' + averageWindSpeed + 'm/s')
+    const averageWindSpeed = await weatherModule.countAverageWindSpeed()
+    console.log('The average wind speed for the next 40 days is around: ' + averageWindSpeed + 'm/s.')
 
     const maxRainfall = await weatherModule.countMaximumRainfall(rainfall)
-    console.log('The maximum rainfall for the next 40 days is around: ' + maxRainfall + 'mm')
+    console.log('The maximum rainfall for the next 40 days is around: ' + maxRainfall + 'mm.')
 
     return {
       averageTemperature,

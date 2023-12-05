@@ -24,11 +24,11 @@ export class WeatherModule {
    */
   countAverageTemperature () {
     try {
-      console.log('temperaturesInKelvin:', this.temperaturesInKelvin)
+      console.log('Received temperature data:', this.temperaturesInKelvin)
 
       const temperaturesInKelvinSum = this.temperaturesInKelvin.reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
-      console.log('type:' + typeof temperaturesInKelvinSum)
       const averageTemperatureKelvin = temperaturesInKelvinSum / this.temperaturesInKelvin.length
+      console.log('Average temperatures is: ' + averageTemperatureKelvin + 'K')
 
       // Calculation results are kept to one decimal place.
       return Number(averageTemperatureKelvin.toFixed(1))
@@ -46,10 +46,12 @@ export class WeatherModule {
    */
   countAverageHumidity () {
     try {
-      console.log('The humidities for the next 40 days are: ' + this.humiditieStrings)
+      console.log('The received humidities: ' + this.humidities)
 
       const humiditySum = this.humidities.reduce((acc, curr) => acc + curr, 0)
       const averageHumidity = humiditySum / this.humidities.length
+      console.log('Average humidity is: ' + averageHumidity + '%')
+      console.log('type of averageHumidity: ' + typeof averageHumidity)
 
       // Calculation results are kept to one decimal place.
       return Number(averageHumidity.toFixed(1))
@@ -66,10 +68,12 @@ export class WeatherModule {
    */
   countAverageWindSpeed () {
     try {
-      console.log('The wind speed for the next 40 days are: ' + this.windStrings)
+      console.log('The received windSpeeds data: ' + this.windSpeeds)
 
       const windSpeedSum = this.windSpeeds.reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
       const averageWindSpeed = windSpeedSum / this.windSpeeds.length
+      console.log('Average windSpeeds is: ' + averageWindSpeed + 'm/s')
+      console.log('type of averageWindSpeed: ' + typeof averageWindSpeed)
 
       // Calculation results are kept to one decimal place.
       return Number(averageWindSpeed.toFixed(1))
@@ -104,10 +108,9 @@ export class WeatherModule {
       console.log('Received rainfall data:', this.rainfall)
       // Convert to numbers and calculate maximum
       const rainfallAmounts = this.rainfall.map(rain => Number(rain))
+      console.log('After this.rainfall.map(rain => Number(rain)) convert: ' + rainfallAmounts)
       const maxRainfall = Math.max(...rainfallAmounts)
 
-      // Log the calculated maximum rainfall
-      console.log('Maximum rainfall calculated:', maxRainfall)
       return maxRainfall || 0
     } catch (error) {
       console.error('Error calculating maximum rainfall:', error)

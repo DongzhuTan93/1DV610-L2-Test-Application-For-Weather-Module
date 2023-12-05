@@ -27,6 +27,7 @@ export class WeatherModule {
       const temperaturesInKelvinSum = this.temperaturesInKelvin.reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
       const averageTemperatureKelvin = temperaturesInKelvinSum / this.temperaturesInKelvin.length
       console.log('Temperatures In Kelvin Sum is: ' + temperaturesInKelvinSum)
+      console.log('Average temperatures is around: ' + temperaturesInKelvinSum + '/' + this.temperaturesInKelvin.length + ' = ' + averageTemperatureKelvin + 'K')
 
       // Calculation results are kept to one decimal place.
       return Number(averageTemperatureKelvin.toFixed(1))
@@ -47,7 +48,7 @@ export class WeatherModule {
       const humiditySum = this.humidities.reduce((acc, curr) => acc + curr, 0)
       const averageHumidity = humiditySum / this.humidities.length
       console.log('Humidity Sum is: ' + humiditySum)
-      console.log('Average humidity is: ' + humiditySum + '/ 4' + ' = ' + averageHumidity)
+      console.log('Average humidity is around: ' + humiditySum + '/' + this.humidities.length + ' = ' + averageHumidity)
       // console.log('Average humidity is: ' + averageHumidity + '%')
       // console.log('type of averageHumidity: ' + typeof averageHumidity)
 
@@ -69,7 +70,7 @@ export class WeatherModule {
       const windSpeedSum = this.windSpeeds.reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
       const averageWindSpeed = windSpeedSum / this.windSpeeds.length
       console.log('Wind Speed Sum is: ' + windSpeedSum)
-      console.log('Average humidity is: ' + windSpeedSum + '/ 4' + ' = ' + averageWindSpeed)
+      console.log('Average humidity is: ' + windSpeedSum + '/' + this.windSpeeds.length + ' = ' + averageWindSpeed)
       // console.log('type of averageWindSpeed: ' + typeof averageWindSpeed)
 
       // Calculation results are kept to one decimal place.

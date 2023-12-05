@@ -44,7 +44,7 @@ export const main = async (city, country) => {
 
     const temperaturesInKelvin = [173.15, 273.15, 400.15, 200]
     const humidities = [4, 6, 2, 8, 7]
-    const windSpeeds = [1, 1, 1, 1]
+    const windSpeeds = [1, 4, 2, 3]
     const rainfall = [2, 5, 7, 9, 2, 4]
     const weatherModule = new WeatherModule(temperaturesInKelvin, humidities, windSpeeds, rainfall)
 
@@ -52,7 +52,7 @@ export const main = async (city, country) => {
     // console.log('The average temperature in kelvin for the next 40 days is around: ' + averageTemperature + 'K.')
 
     const averageTemperatureInCelsius = await weatherModule.convertKelvinToCelsius(averageTemperature)
-    console.log('The average temperature in kelvin is ' + averageTemperature + ' K' + ' which is around (' + averageTemperature + ' - 273.15) = ' + averageTemperatureInCelsius + '°C in Celsius.')
+    console.log('The average temperature in kelvin is around ' + averageTemperature + ' K' + ' which is around (' + averageTemperature + ' - 273.15) = ' + averageTemperatureInCelsius + '°C in Celsius.')
     // console.log('The average temperature in kelvin is ' + averageTemperature + 'K' + ' which is around ' + averageTemperatureInCelsius + '°C in Celsius.')
 
     const averageHumidity = await weatherModule.countAverageHumidity()
@@ -63,7 +63,7 @@ export const main = async (city, country) => {
 
     const maxRainfall = await weatherModule.countMaximumRainfall(rainfall)
     // console.log('The maximum rainfall for the next 40 days is around: ' + maxRainfall + 'mm.')
-    console.log('The max rainfall at ' + rainfall.toString() + ' is ' + maxRainfall)
+    console.log('The max rainfall inside : [' + rainfall.join(', ') + '] is ' + maxRainfall)
 
     return {
       averageTemperature,

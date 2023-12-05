@@ -52,10 +52,6 @@ export class WeatherDataFetcher {
 
       console.log('Matched Coordinates:', matchedLocation)
       return { lat: matchedLocation.lat, lon: matchedLocation.lon }
-
-      // console.log('getCoordinates: ', data)
-      // console.log('getCoordinates: ' + data[0].lat + data[0].lon)
-      // return data[0]
     } catch (error) {
       console.error('Error fetching coordinates:', error)
       throw error

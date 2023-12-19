@@ -44,7 +44,7 @@ export const main = async (city, country) => {
 
     const temperaturesInKelvin = [173.15, 273.15, 400.15, 200]
     const humidities = [4, 6, 2, 8, 7]
-    const windSpeeds = [1, 4, 2, 3]
+    const windSpeeds = [1, 5, 2, 3]
     const rainfall = [2, 5, 7, 9, 2, 4]
     const weatherModule = new WeatherModule(temperaturesInKelvin, humidities, windSpeeds, rainfall)
 

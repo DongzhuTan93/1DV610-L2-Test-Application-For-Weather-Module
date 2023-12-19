@@ -70,7 +70,7 @@ export class WeatherModule {
       const windSpeedSum = this.windSpeeds.reduce((acc, curr) => acc + curr, 0) // Inspiration: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
       const averageWindSpeed = windSpeedSum / this.windSpeeds.length
       console.log('Wind Speed Sum is: ' + windSpeedSum)
-      console.log('Average humidity is: ' + windSpeedSum + '/' + this.windSpeeds.length + ' = ' + averageWindSpeed)
+      console.log('Average humidity is: ' + windSpeedSum + '/' + this.windSpeeds.length + ' = ' + Number(averageWindSpeed.toFixed(1)))
       // console.log('type of averageWindSpeed: ' + typeof averageWindSpeed)
 
       // Calculation results are kept to one decimal place.
